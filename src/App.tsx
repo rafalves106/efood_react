@@ -1,25 +1,33 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+
+import Footer from "./components/Footer";
+import { GlobalCss } from "./styles";
+import Home from "./components/pages/Home";
+import Italiana from "./components/pages/Italiana";
+import Japonesa from "./components/pages/Japonesa";
+
+const rotas = createBrowserRouter([
+  {
+    path: "/",
+    element: <Home />,
+  },
+  {
+    path: "/italiana",
+    element: <Italiana />,
+  },
+  {
+    path: "/japonesa",
+    element: <Japonesa />,
+  },
+]);
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <GlobalCss />
+      <RouterProvider router={rotas} />
+      <Footer />
+    </>
   );
 }
 
