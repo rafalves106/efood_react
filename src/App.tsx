@@ -1,33 +1,17 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 
 import Footer from "./components/Footer";
 import { GlobalCss } from "./styles";
-import Home from "./components/pages/Home";
-import Italiana from "./components/pages/Italiana";
-import Japonesa from "./components/pages/Japonesa";
 
-const rotas = createBrowserRouter([
-  {
-    path: "/",
-    element: <Home />,
-  },
-  {
-    path: "/italiana",
-    element: <Italiana />,
-  },
-  {
-    path: "/japonesa",
-    element: <Japonesa />,
-  },
-]);
+import Rotas from "./routes";
 
 function App() {
   return (
-    <>
+    <BrowserRouter>
       <GlobalCss />
-      <RouterProvider router={rotas} />
+      <Rotas />
       <Footer />
-    </>
+    </BrowserRouter>
   );
 }
 

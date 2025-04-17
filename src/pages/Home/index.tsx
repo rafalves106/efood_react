@@ -1,10 +1,10 @@
-import ShopsList from "../../ShopList";
-import ShopsHeader from "../../ShopsHeader";
-import Shop from "../../../models/Shop";
+import ShopsList from "../../components/ShopList";
+import ShopsHeader from "../../components/ShopsHeader";
+import Shop from "../../models/Shop";
 
-import ladolce from "../../../assets/images/La Dolce.png";
-import hiokisushi from "../../../assets/images/Hioki Sushi.png";
-import star from "../../../assets/images/estrela.png";
+import ladolce from "../../assets/images/La Dolce.png";
+import hiokisushi from "../../assets/images/Hioki Sushi.png";
+import star from "../../assets/images/estrela.png";
 
 const shops: Shop[] = [
   {

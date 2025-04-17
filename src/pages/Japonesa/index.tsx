@@ -1,9 +1,9 @@
-import Food from "../../../models/Food";
-import Banner from "../../Banner";
+import Food from "../../models/Food";
+import Banner from "../../components/Banner";
 
-import ramen from "../../../assets/images/ramen.png";
-import FoodList from "../../FoodList";
-import FoodsHeader from "../../FoodsHeader";
+import ramen from "../../assets/images/ramen.png";
+import FoodList from "../../components/FoodList";
+import FoodsHeader from "../../components/FoodsHeader";
 
 const foods: Food[] = [
   {
