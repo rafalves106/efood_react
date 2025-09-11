@@ -33,7 +33,7 @@ const Modal = ({ food, onClose }: ModalProps) => {
           <ProdutoTitle>{food.nome}</ProdutoTitle>
           <ProdutoDescription>{food.descricao}</ProdutoDescription>
           <ProdutoDescription>Serve: de {food.porcao}</ProdutoDescription>
-          <Button type="button" title="Adicionar ao carrinho">
+          <Button type="button" title="Adicionar ao carrinho" variant="default">
             {`Adicionar ao carrinho - ${formatPrice(food.preco)}`}
           </Button>
         </ProdutoTexts>
