@@ -1,22 +1,18 @@
-import Food from "../../models/Food";
+import { Food } from "../../pages/Home";
 import Foods from "../Foods";
 import { Container, List } from "./style";
 
 type Props = {
   foods: Food[];
+  onFoodClick: (food: Food) => void;
 };
 
-const FoodList = ({ foods }: Props) => (
+const FoodList = ({ foods, onFoodClick }: Props) => (
   <Container>
     <div className="container">
       <List>
         {foods.map((food) => (
-          <Foods
-            image={food.image}
-            title={food.title}
-            description={food.description}
-            button={food.button}
-          />
+          <Foods key={food.id} food={food} onFoodClick={onFoodClick} />
         ))}
       </List>
     </div>

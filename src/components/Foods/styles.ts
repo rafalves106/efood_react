@@ -5,8 +5,23 @@ export const Card = styled.div`
   background-color: ${cores.salmao};
   padding: 8px;
   display: flex;
+  justify-content: space-between;
   flex-direction: column;
   gap: 8px;
+`;
+
+export const Content = styled.div`
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  gap: 8px;
+`;
+export const Image = styled.img`
+  width: 100%;
+  height: 167px;
+  object-fit: cover;
+  object-position: center;
+  display: block;
 `;
 
 export const Titulo = styled.h3`

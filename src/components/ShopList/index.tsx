@@ -1,4 +1,4 @@
-import Shop from "../../models/Shop";
+import { Shop } from "../../pages/Home";
 import Shops from "../Shops";
 import { Container, List } from "./style";
 
@@ -11,16 +11,7 @@ const ShopsList = ({ shops }: Props) => (
     <div className="container">
       <List>
         {shops.map((shop) => (
-          <Shops
-            image={shop.image}
-            rating={shop.rating}
-            star={shop.star}
-            title={shop.title}
-            description={shop.description}
-            button={shop.button}
-            infos={shop.infos}
-            buttonLink={shop.buttonLink}
-          />
+          <Shops key={shop.id} shop={shop} />
         ))}
       </List>
     </div>

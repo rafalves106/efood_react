@@ -14,6 +14,6 @@ export const HeaderBar = styled.header`
 
 export const HeaderTitle = styled.h1`
   font-size: 36px;
-  font-weigth: 900;
+  font-weight: 900;
   text-align: center;
 `;

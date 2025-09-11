@@ -17,18 +17,18 @@ export const GlobalCss = createGlobalStyle`
 }
 
 body {
-background-color: ${cores.bege};
-color: ${cores.salmao};
+  background-color: ${cores.bege};
+  color: ${cores.salmao};
 
-.container {
-  max-width: 1024px;
-  width: 100%;
-  margin: 0 auto;
-}
+  .container {
+    max-width: 1024px;
+    width: 100%;
+    margin: 0 auto;
+  }
   
-a {
-  text-decoration: none;
-}`;
+  a {
+    text-decoration: none;
+  }}`;
 
 export const Logo = styled.img`
   max-width: 125px;

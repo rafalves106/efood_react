@@ -1,20 +1,21 @@
 import Button from "../Button";
-import { Card, Descricao, Titulo } from "./styles";
+import { Card, Content, Descricao, Image, Titulo } from "./styles";
+import { Food } from "../../pages/Home";
 
 type Props = {
-  image: string;
-  title: string;
-  description: string;
-  button: string;
+  food: Food;
+  onFoodClick: (food: Food) => void;
 };
 
-const Foods = ({ image, title, description, button }: Props) => (
-  <Card>
-    <img src={image} alt={image} />
-    <Titulo>{title}</Titulo>
-    <Descricao>{description}</Descricao>
-    <Button type="button" to="/carrinho" title="Adicionar ao carrinho">
-      {button}
+const Foods = ({ food, onFoodClick }: Props) => (
+  <Card onClick={() => onFoodClick(food)}>
+    <Content>
+      <Image src={food.foto} alt={food.nome} />
+      <Titulo>{food.nome} </Titulo>
+      <Descricao>{food.descricao}</Descricao>
+    </Content>
+    <Button type="link" to="/carrinho" title="Adicionar ao carrinho">
+      Adicionar ao carrinho
     </Button>
   </Card>
 );

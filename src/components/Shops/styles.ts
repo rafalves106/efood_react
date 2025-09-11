@@ -13,6 +13,14 @@ export const Card = styled.div`
   }
 `;
 
+export const Cover = styled.img`
+  width: 100%;
+  height: 217px;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+`;
+
 export const Content = styled.div`
   margin: 0;
   padding: 8px;

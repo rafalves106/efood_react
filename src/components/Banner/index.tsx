@@ -1,22 +1,17 @@
 import { Imagem, Titulo } from "./styles";
-import banneritaliana from "../../assets/images/banneritaliana.jpg";
-import bannerjaponesa from "../../assets/images/bannerjaponesa.png";
 import Tag from "../Tag";
+import { Shop } from "../../pages/Home";
 
 type Props = {
-  type: "italiana" | "japonesa";
-  tag: string;
-  title: string;
+  shop: Shop;
 };
 
-const Banner = ({ type = "italiana", tag, title }: Props) => {
-  const backgroundImage = type === "japonesa" ? bannerjaponesa : banneritaliana;
-
+const Banner = ({ shop }: Props) => {
   return (
-    <Imagem style={{ backgroundImage: `url(${backgroundImage})` }}>
+    <Imagem style={{ backgroundImage: `url(${shop.capa})` }}>
       <div className="container">
-        <Tag size="big">{tag}</Tag>
-        <Titulo>{title}</Titulo>
+        <Tag size="big">{shop.tipo}</Tag>
+        <Titulo>{shop.titulo}</Titulo>
       </div>
     </Imagem>
   );
