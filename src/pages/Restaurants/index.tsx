@@ -1,16 +1,17 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useParams } from "react-router-dom";
 import Banner from "../../components/Banner";
 import FoodList from "../../components/FoodList";
 import FoodsHeader from "../../components/FoodsHeader";
 import Modal from "../../components/Modal";
-import { Shop } from "../Home";
 import { Food } from "../Home";
+import { useGetRestaurantQuery } from "../../services/api";
 
 const Restaurante = () => {
   const { id } = useParams<{ id: string }>();
 
-  const [restaurant, setRestaurant] = useState<Shop | null>(null);
+  const { data: restaurant, isLoading } = useGetRestaurantQuery(id!);
+
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedFood, setSelectedFood] = useState<Food | null>(null);
 
@@ -24,33 +25,7 @@ const Restaurante = () => {
     setSelectedFood(null);
   };
 
-  useEffect(() => {
-    if (id) {
-      fetch(`https://ebac-fake-api.vercel.app/api/efood/restaurantes/${id}`)
-        .then((res) => {
-          if (!res.ok) {
-            throw new Error("Restaurante não encontrado");
-          }
-          return res.json();
-        })
-        .then((data: Shop) => {
-          const cardapioCorrigido = data.cardapio.map((item) => ({
-            ...item,
-            preco: parseFloat(item.preco.toString()),
-          }));
-
-          setRestaurant({
-            ...data,
-            cardapio: cardapioCorrigido,
-          });
-        })
-        .catch((error) => {
-          console.error("Erro ao buscar o restaurante:", error);
-        });
-    }
-  }, [id]);
-
-  if (!restaurant) {
+  if (isLoading || !restaurant) {
     return <h2>Carregando...</h2>;
   }
 

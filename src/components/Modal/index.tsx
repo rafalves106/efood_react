@@ -10,6 +10,8 @@ import {
 import closeIcon from "../../assets/images/close.png";
 import Button from "../Button";
 import { Food } from "../../pages/Home";
+import { useDispatch } from "react-redux";
+import { add, open } from "../../store/reducers/cart";
 
 interface ModalProps {
   food: Food;
@@ -24,6 +26,13 @@ const Modal = ({ food, onClose }: ModalProps) => {
     }).format(price);
   };
 
+  const dispatch = useDispatch();
+
+  const addToCart = () => {
+    dispatch(add(food));
+    dispatch(open());
+  };
+
   return (
     <Overlay>
       <ModalContent>
@@ -33,7 +42,12 @@ const Modal = ({ food, onClose }: ModalProps) => {
           <ProdutoTitle>{food.nome}</ProdutoTitle>
           <ProdutoDescription>{food.descricao}</ProdutoDescription>
           <ProdutoDescription>Serve: de {food.porcao}</ProdutoDescription>
-          <Button type="button" title="Adicionar ao carrinho" variant="default">
+          <Button
+            onClick={addToCart}
+            type="button"
+            title="Adicionar ao carrinho"
+            variant="default"
+          >
             {`Adicionar ao carrinho - ${formatPrice(food.preco)}`}
           </Button>
         </ProdutoTexts>

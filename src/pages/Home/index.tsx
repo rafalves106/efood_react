@@ -1,6 +1,7 @@
 import ShopsList from "../../components/ShopList";
 import ShopsHeader from "../../components/ShopsHeader";
-import { useEffect, useState } from "react";
+
+import { useGetShopsQuery } from "../../services/api";
 
 export type Food = {
   foto: string;
@@ -23,20 +24,22 @@ export type Shop = {
 };
 
 const Home = () => {
-  const [shops, setShop] = useState<Shop[]>([]);
+  const { data: shops, isLoading } = useGetShopsQuery();
 
-  useEffect(() => {
-    fetch("https://ebac-fake-api.vercel.app/api/efood/restaurantes")
-      .then((res) => res.json())
-      .then((res) => setShop(res));
-  }, []);
+  if (isLoading) {
+    return <h2>Carregando lojas...</h2>;
+  }
 
-  return (
-    <>
-      <ShopsHeader />
-      <ShopsList shops={shops} />
-    </>
-  );
+  if (shops && shops.length > 0) {
+    return (
+      <>
+        <ShopsHeader />
+        <ShopsList shops={shops} />
+      </>
+    );
+  }
+
+  return <h2>Não foi possível carregar as lojas.</h2>;
 };
 
 export default Home;
