@@ -48,3 +48,8 @@ export const SidebarTitle = styled.h2`
   color: ${cores.rosa};
   margin-bottom: 16px;
 `;
+
+export const EmptyCart = styled.p`
+  font-size: 14px;
+  color: ${cores.rosa};
+`;

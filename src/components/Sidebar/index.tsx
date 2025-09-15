@@ -7,6 +7,7 @@ import {
   Sidebar as StyledSidebar,
   SideContainer,
   SidebarTitle,
+  EmptyCart,
 } from "./styles";
 import Cart from "../Cart";
 import Delivery from "../Delivery";
@@ -158,7 +159,11 @@ const Sidebar = () => {
   };
 
   const renderEmptyCart = () => (
-    <p>O seu carrinho está vazio. Adicione um prato para continuar.</p>
+    <>
+      <EmptyCart>
+        O seu carrinho está vazio. Adicione um prato para continuar.
+      </EmptyCart>
+    </>
   );
 
   return (
