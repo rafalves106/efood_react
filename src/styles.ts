@@ -6,6 +6,7 @@ export const cores = {
   bege: "#FFF8F2",
   salmao: "#E66767",
   rosa: "#FFEBD9",
+  text: "#4B4B4B",
 };
 
 export const GlobalCss = createGlobalStyle`
