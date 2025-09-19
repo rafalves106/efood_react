@@ -25,6 +25,7 @@ export const deliverySchema = Yup.object().shape({
 export const paymentSchema = Yup.object().shape({
   cardName: Yup.string()
     .min(5, "O nome precisa ter pelo menos 5 caracteres")
+    .matches(/^[a-zA-Z\s'-]+$/, "O nome deve conter apenas letras")
     .required("O campo é obrigatório"),
 
   cardNumber: Yup.string()
