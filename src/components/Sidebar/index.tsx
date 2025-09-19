@@ -14,8 +14,9 @@ import Delivery from "../Delivery";
 import Payment from "../Payment";
 import Confirmation from "../Confirmation";
 import { useFormik } from "formik";
-import * as Yup from "yup";
 import { usePurchaseMutation } from "../../services/api";
+
+import { deliverySchema, paymentSchema } from "../../schemas";
 
 const Sidebar = () => {
   const { isOpen, items } = useSelector((state: RootReducer) => state.cart);
@@ -63,84 +64,47 @@ const Sidebar = () => {
       monthIssue: "",
       yearIssue: "",
     },
-    validationSchema: Yup.object({
-      fullName: Yup.string()
-        .min(5, "O nome precisa ter pelo menos 5 caracteres")
-        .required("O campo é obrigatório"),
-
-      address: Yup.string().required("O campo é obrigatório"),
-
-      city: Yup.string().required("O campo é obrigatório"),
-
-      postalCode: Yup.string()
-        .min(10, "O campo precisa ter 10 caracteres")
-        .max(10, "O campo precisa ter 10 caracteres")
-        .required("O campo é obrigatório"),
-
-      number: Yup.string().required("O campo é obrigatório"),
-
-      complement: Yup.string(),
-
-      cardName: Yup.string()
-        .min(5, "O nome precisa ter pelo menos 5 caracteres")
-        .required("O campo é obrigatório"),
-
-      cardNumber: Yup.string()
-        .min(16, "O campo precisa ter 16 caracteres")
-        .max(16, "O campo precisa ter 16 caracteres")
-        .required("O campo é obrigatório"),
-
-      cvv: Yup.string()
-        .min(3, "O campo precisa ter 3 caracteres")
-        .max(3, "O campo precisa ter 3 caracteres")
-        .required("O campo é obrigatório"),
-
-      monthIssue: Yup.string()
-        .min(2, "O campo precisa ter 2 caracteres")
-        .max(2, "O campo precisa ter 2 caracteres")
-        .required("O campo é obrigatório"),
-
-      yearIssue: Yup.string()
-        .min(4, "O campo precisa ter 4 caracteres")
-        .max(4, "O campo precisa ter 4 caracteres")
-        .required("O campo é obrigatório"),
-    }),
+    validationSchema: step === "delivery" ? deliverySchema : paymentSchema,
     onSubmit: async (values) => {
-      const payload = {
-        products: items.map((item) => ({
-          id: item.id,
-          price: item.preco,
-        })),
-        delivery: {
-          receiver: values.fullName,
-          address: {
-            description: values.address,
-            city: values.city,
-            number: parseInt(values.number),
-            zipCode: values.postalCode,
-            complement: values.complement,
-          },
-        },
-        payment: {
-          card: {
-            name: values.cardName,
-            number: values.cardNumber,
-            code: parseInt(values.cvv),
-            expires: {
-              month: parseInt(values.monthIssue),
-              year: parseInt(values.yearIssue),
+      if (step === "delivery") {
+        goToPayment();
+      } else if (step === "payment") {
+        const payload = {
+          products: items.map((item) => ({
+            id: item.id,
+            price: item.preco,
+          })),
+          delivery: {
+            receiver: values.fullName,
+            address: {
+              description: values.address,
+              city: values.city,
+              number: parseInt(values.number),
+              zipCode: values.postalCode,
+              complement: values.complement,
             },
           },
-        },
-      };
+          payment: {
+            card: {
+              name: values.cardName,
+              number: values.cardNumber,
+              code: parseInt(values.cvv),
+              expires: {
+                month: parseInt(values.monthIssue),
+                year: parseInt(values.yearIssue),
+              },
+            },
+          },
+        };
 
-      try {
-        const response = await purchase(payload).unwrap();
-        setOrderId(response.orderId);
-        dispatch(clear());
-        goToConfirmation();
-      } catch (error) {
-        console.error("Falha ao processar a compra:", error);
+        try {
+          const response = await purchase(payload).unwrap();
+          setOrderId(response.orderId);
+          dispatch(clear());
+          goToConfirmation();
+        } catch (error) {
+          console.error("Falha ao processar a compra:", error);
+        }
       }
     },
   });
@@ -179,7 +143,11 @@ const Sidebar = () => {
         {step === "delivery" && (
           <>
             <SidebarTitle>Entrega</SidebarTitle>
-            <Delivery onCart={goToCart} onPayment={goToPayment} form={form} />
+            <Delivery
+              onCart={goToCart}
+              onPayment={form.submitForm}
+              form={form}
+            />
           </>
         )}
 
@@ -191,7 +159,7 @@ const Sidebar = () => {
             <Payment
               form={form}
               onDelivery={goToDelivery}
-              onConfirmation={goToConfirmation}
+              onConfirmation={form.submitForm}
             />
           </>
         )}

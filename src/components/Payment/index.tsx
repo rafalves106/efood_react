@@ -35,15 +35,7 @@ const Payment = ({ onDelivery, onConfirmation, form }: Props) => {
   };
 
   const handleFinalSubmit = () => {
-    form.setTouched({
-      cardName: true,
-      cardNumber: true,
-      cvv: true,
-      monthIssue: true,
-      yearIssue: true,
-    });
-
-    form.handleSubmit();
+    form.submitForm();
   };
 
   return (
@@ -72,6 +64,8 @@ const Payment = ({ onDelivery, onConfirmation, form }: Props) => {
               value={form.values.cardNumber}
               onChange={form.handleChange}
               onBlur={form.handleBlur}
+              pattern="\d{16}"
+              title="O número do cartão deve conter 16 dígitos"
             />
             <span>{getErrorMessage("cardNumber")}</span>
           </InputGroup>
@@ -85,6 +79,8 @@ const Payment = ({ onDelivery, onConfirmation, form }: Props) => {
               value={form.values.cvv}
               onChange={form.handleChange}
               onBlur={form.handleBlur}
+              pattern="\d{3}"
+              title="O CVV deve conter 3 dígitos"
             />
             <span>{getErrorMessage("cvv")}</span>
           </InputGroup>
@@ -100,6 +96,8 @@ const Payment = ({ onDelivery, onConfirmation, form }: Props) => {
               value={form.values.monthIssue}
               onChange={form.handleChange}
               onBlur={form.handleBlur}
+              pattern="\d{2}"
+              title="O mês deve conter 2 dígitos"
             />
             <span>{getErrorMessage("monthIssue")}</span>
           </InputGroup>
@@ -113,6 +111,8 @@ const Payment = ({ onDelivery, onConfirmation, form }: Props) => {
               value={form.values.yearIssue}
               onChange={form.handleChange}
               onBlur={form.handleBlur}
+              pattern="\d{4}"
+              title="O ano deve conter 4 dígitos"
             />
             <span>{getErrorMessage("yearIssue")}</span>
           </InputGroup>

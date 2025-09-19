@@ -1,7 +1,6 @@
 import { FormikProps } from "formik";
 import Button from "../Button";
 import { CheckoutContainer, InputGroup, InputRow } from "./styles";
-import * as Yup from "yup";
 
 type FormValues = {
   fullName: string;
@@ -32,38 +31,6 @@ const Delivery = ({ onPayment, onCart, form }: Props) => {
       return form.errors[fieldName] as string;
     }
     return "";
-  };
-
-  const handleNextStep = async () => {
-    const deliverySchema = Yup.object().shape({
-      fullName: Yup.string()
-        .min(5, "O nome precisa ter pelo menos 5 caracteres")
-        .required("O campo é obrigatório"),
-      address: Yup.string().required("O campo é obrigatório"),
-      city: Yup.string().required("O campo é obrigatório"),
-      postalCode: Yup.string()
-        .min(10, "O campo precisa ter 10 caracteres")
-        .max(10, "O campo precisa ter 10 caracteres")
-        .required("O campo é obrigatório"),
-      number: Yup.string().required("O campo é obrigatório"),
-      complement: Yup.string(),
-    });
-
-    try {
-      await deliverySchema.validate(form.values, { abortEarly: false });
-
-      form.setTouched({
-        fullName: true,
-        address: true,
-        city: true,
-        postalCode: true,
-        number: true,
-        complement: true,
-      });
-      onPayment();
-    } catch (errors) {
-      console.log("Erros de validação:", errors);
-    }
   };
 
   return (
@@ -118,6 +85,8 @@ const Delivery = ({ onPayment, onCart, form }: Props) => {
               value={form.values.postalCode}
               onChange={form.handleChange}
               onBlur={form.handleBlur}
+              pattern="\d{5}-\d{3}"
+              title="Formato de CEP inválido. Use 12345-678"
             />
             <span>{getErrorMessage("postalCode")}</span>
           </InputGroup>
@@ -131,6 +100,8 @@ const Delivery = ({ onPayment, onCart, form }: Props) => {
               value={form.values.number}
               onChange={form.handleChange}
               onBlur={form.handleBlur}
+              pattern="\d+"
+              title="O campo deve conter apenas números"
             />
             <span>{getErrorMessage("number")}</span>
           </InputGroup>
@@ -151,7 +122,7 @@ const Delivery = ({ onPayment, onCart, form }: Props) => {
       </CheckoutContainer>
 
       <Button
-        onClick={handleNextStep}
+        onClick={onPayment}
         type="button"
         title="Continuar para o pagamento"
       >
